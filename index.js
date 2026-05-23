@@ -24,6 +24,19 @@ async function getPuppies() {
   }
 }
 
+/** Updates state with a single puppy from the API */
+async function getPuppy(id) {
+  try {
+    const response = await fetch(API + "/players/" + id);
+    const result = await response.json();
+    console.log(result);
+    selectedPuppy = result.data.player;
+    render();
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 // Get one puppy
 
 // Update STATE DATA Functions
@@ -60,6 +73,38 @@ function PuppyListItem(puppy) {
   return $li;
 }
 
+/** Detailed information about the selected puppy */
+function SelectedPuppy() {
+  if (!selectedPuppy) {
+    const $p = document.createElement("p");
+    $p.textContent = "Please select a puppy to learn more.";
+    return $p;
+  }
+
+  const $puppy = document.createElement("section");
+  $puppy.innerHTML = `
+  <img
+   src="${selectedPuppy.imageUrl}"
+   alt="${selectedPuppy.name}"
+>
+    <p>Name: ${selectedPuppy.name}</p>
+    <p>ID: ${selectedPuppy.id}</p>
+    <p>Breed: ${selectedPuppy.breed}</p>
+    <p>Status: ${selectedPuppy.status}</p>
+    <button>Remove Puppy</button>
+  `;
+  //   Return to add <Team></Team>
+  //   $puppy.querySelector("Team").replaceWith(PuppyTeam());
+
+  const $delete = $puppy.querySelector("button");
+
+  $delete.addEventListener("click", async function () {
+    await deleteParty(selectedPuppy.id);
+  });
+
+  return $puppy;
+}
+
 // =============== RENDER
 
 function render() {
@@ -83,6 +128,7 @@ function render() {
   `;
 
   $app.querySelector("PuppyList").replaceWith(PuppyList());
+  $app.querySelector("SelectedPuppy").replaceWith(SelectedPuppy());
 }
 
 async function init() {
