@@ -37,7 +37,17 @@ async function getPuppy(id) {
   }
 }
 
-// Get one puppy
+/** Updates state with all teams from the API */
+async function getTeams() {
+  try {
+    const response = await fetch(API + "/teams");
+    const result = await response.json();
+    teams = result.data.teams;
+    render();
+  } catch (e) {
+    console.error(e);
+  }
+}
 
 // Update STATE DATA Functions
 
@@ -90,6 +100,7 @@ function SelectedPuppy() {
     <p>Name: ${selectedPuppy.name}</p>
     <p>ID: ${selectedPuppy.id}</p>
     <p>Breed: ${selectedPuppy.breed}</p>
+    <p>Team: ${selectedPuppy.team?.name || "Unassigned"}</p>
     <p>Status: ${selectedPuppy.status}</p>
     <button>Remove Puppy</button>
   `;
@@ -103,6 +114,16 @@ function SelectedPuppy() {
   });
 
   return $puppy;
+}
+
+/** List of teams for the selected puppy */
+function Teams() {
+  const $ul = document.createElement("ul");
+  const puppyTeams = guests.filter((guest) =>
+    rsvps.find(
+      (rsvp) => rsvp.guestId === guest.id && rsvp.eventId === selectedParty.id,
+    ),
+  );
 }
 
 // =============== RENDER
