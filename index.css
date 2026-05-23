@@ -1,0 +1,126 @@
+/* general */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: white;
+  color: black;
+}
+
+h1 {
+  text-align: center;
+  padding: 1rem;
+  background: #ffb347;
+  margin: 0;
+  color: black;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+/* ===== Layout ===== */
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+section {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== Puppy List ===== */
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list li {
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  border-radius: 10px;
+  background: #fafafa;
+  cursor: pointer;
+  text-align: center;
+}
+
+.list li:hover {
+  background: whitesmoke;
+}
+
+.selectedPuppy {
+  border: 2px solid #ffb347;
+}
+
+.list img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+}
+
+.list a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+/* ===== Selected Puppy ===== */
+
+#selected img {
+  width: 100%;
+  max-width: 250px;
+  border-radius: 12px;
+  display: block;
+  margin: auto;
+}
+
+#selected p {
+  margin: 0.5rem 0;
+}
+
+/* ===== Buttons ===== */
+
+button {
+  background: #ffb347;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 0.75rem;
+}
+
+button:hover {
+  background: #ff9f1c;
+}
+
+/* ===== Form ===== */
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid lightgray;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+label {
+  font-weight: bold;
+}

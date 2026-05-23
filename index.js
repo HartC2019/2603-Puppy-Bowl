@@ -193,6 +193,10 @@ function render() {
   $app.innerHTML = `
     <h1>Puppy Bowl</h1>
     <main>
+        <section id="form">
+        <h2>Add a Puppy</h2>
+        <NewPuppyForm></NewPuppyForm>
+      </section>
       <section id="list">
         <h2>Puppy Roster</h2>
         <PuppyList></PuppyList>
@@ -200,10 +204,6 @@ function render() {
       <section id="selected">
         <h2>Puppy Details</h2>
         <SelectedPuppy></SelectedPuppy>
-      </section>
-      <section id="form">
-        <h2>Add a Puppy</h2>
-        <NewPuppyForm></NewPuppyForm>
       </section>
     </main>
   `;
