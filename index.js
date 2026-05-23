@@ -54,6 +54,20 @@ async function getTeams() {
 // POST puppy
 
 // Remove puppy
+// Updates state to delete party when button is clicked from the details
+async function deletePuppy(id) {
+  try {
+    await fetch(`${API}/players/${id}`, {
+      method: "DELETE",
+    });
+
+    selectedPuppy = undefined;
+
+    await getPuppies();
+  } catch (e) {
+    console.error(e);
+  }
+}
 
 // =============== COMPONENTS
 
@@ -110,7 +124,7 @@ function SelectedPuppy() {
   const $delete = $puppy.querySelector("button");
 
   $delete.addEventListener("click", async function () {
-    await deleteParty(selectedPuppy.id);
+    await deletePuppy(selectedPuppy.id);
   });
 
   return $puppy;
