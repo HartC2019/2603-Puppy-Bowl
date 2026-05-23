@@ -52,6 +52,19 @@ async function getTeams() {
 // Update STATE DATA Functions
 
 // POST puppy
+// Updates state with a newly added puppy from the API
+async function addPuppy(puppy) {
+  try {
+    await fetch(API + "/players", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(puppy),
+    });
+    await getPuppies();
+  } catch (e) {
+    console.error(e);
+  }
+}
 
 // Remove puppy
 // Updates state to delete party when button is clicked from the details
@@ -91,6 +104,7 @@ function PuppyListItem(puppy) {
   }
 
   $li.innerHTML = `
+    <img src="${puppy.imageUrl}" alt="${puppy.name}">
     <a href="#selected">${puppy.name}</a>
   `;
   $li.addEventListener("click", () => getPuppy(puppy.id));
@@ -130,14 +144,46 @@ function SelectedPuppy() {
   return $puppy;
 }
 
-/** List of teams for the selected puppy */
-function Teams() {
-  const $ul = document.createElement("ul");
-  const puppyTeams = guests.filter((guest) =>
-    rsvps.find(
-      (rsvp) => rsvp.guestId === guest.id && rsvp.eventId === selectedParty.id,
-    ),
-  );
+// For component to add a new puppy
+function NewPuppyForm() {
+  const $form = document.createElement("form");
+  $form.innerHTML = `
+    <label>
+      Name
+      <input name="name" required />
+    </label>
+    <label>
+      Breed
+      <input name="breed" required />
+    </label>
+    <label for="status-select">Status:</label>
+        <select name="status">
+        <option value="">--Choose a status--</option>
+        <option value="bench">Bench</option>
+        <option value="field">Field</option>
+        </select>    
+    <label>
+      Image URL
+      <input name="imageUrl" type="url" required/>
+    </label>
+    <button>Add Puppy</button>
+  `;
+
+  $form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const data = new FormData($form);
+
+    addPuppy({
+      name: data.get("name"),
+      breed: data.get("breed"),
+      status: data.get("status"),
+      imageUrl: data.get("imageUrl"),
+    });
+    $form.reset();
+  });
+
+  return $form;
 }
 
 // =============== RENDER
@@ -164,11 +210,12 @@ function render() {
 
   $app.querySelector("PuppyList").replaceWith(PuppyList());
   $app.querySelector("SelectedPuppy").replaceWith(SelectedPuppy());
+  $app.querySelector("NewPuppyForm").replaceWith(NewPuppyForm());
 }
 
 async function init() {
   await getPuppies();
-  render();
+  await getTeams();
 }
 
 init();
